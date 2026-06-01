@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Workshop extends Model
 {
     protected $fillable = [
-        'titre',
-        'description',
-        'date_debut',
-        'date_fin',
-        'lieu',
-        'capacite',
-        'statut',
-        'id_formateur'
-    ];
+    'titre',
+    'description',
+    'date_debut',
+    'date_fin',
+    'lieu',
+    'capacite',
+    'statut',
+    'id_formateur',
+    'photo'
+];
 
     // Un workshop appartient à un formateur
     public function formateur()

@@ -5,7 +5,7 @@
 <div class="bg-white rounded-lg shadow p-6 max-w-2xl mx-auto">
     <h1 class="text-2xl font-bold text-blue-800 mb-6">➕ Créer un Workshop</h1>
 
-    <form method="POST" action="{{ route('workshops.store') }}">
+    <form method="POST" action="{{ route('workshops.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-4">
@@ -47,12 +47,19 @@
             @error('lieu') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">Capacité maximale</label>
             <input type="number" name="capacite" value="{{ old('capacite') }}"
                 class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800"
                 placeholder="Nombre de places">
             @error('capacite') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 font-bold mb-2">Photo du Workshop</label>
+            <input type="file" name="photo" accept="image/*"
+                class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800">
+            @error('photo') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="flex gap-4">
