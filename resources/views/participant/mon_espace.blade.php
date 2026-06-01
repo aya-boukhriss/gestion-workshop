@@ -14,6 +14,7 @@
                 <th class="text-left p-3">Date</th>
                 <th class="text-left p-3">Lieu</th>
                 <th class="text-left p-3">Statut</th>
+                <th class="text-left p-3">Évaluation</th>
                 <th class="text-left p-3">Certificat</th>
                 <th class="text-left p-3">Actions</th>
             </tr>
@@ -29,6 +30,37 @@
                         {{ $inscription->statut == 'confirmee' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                         {{ ucfirst($inscription->statut) }}
                     </span>
+                </td>
+                <td class="p-3">
+                    @if($inscription->evaluation)
+                        <div class="text-yellow-500">
+                            @for($i = 1; $i <= 5; $i++)
+                                {{ $i <= $inscription->evaluation->note ? '⭐' : '☆' }}
+                            @endfor
+                        </div>
+                        <p class="text-xs text-gray-500">{{ $inscription->evaluation->commentaire }}</p>
+                    @elseif($inscription->workshop->statut == 'termine')
+                        <form method="POST" action="{{ route('evaluation.store', $inscription) }}">
+                            @csrf
+                            <select name="note" class="border rounded px-2 py-1 text-sm mb-1 w-full">
+                                <option value="">Note...</option>
+                                <option value="1">⭐ 1</option>
+                                <option value="2">⭐⭐ 2</option>
+                                <option value="3">⭐⭐⭐ 3</option>
+                                <option value="4">⭐⭐⭐⭐ 4</option>
+                                <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                            </select>
+                            <input type="text" name="commentaire"
+                                placeholder="Commentaire..."
+                                class="border rounded px-2 py-1 text-sm mb-1 w-full">
+                            <button type="submit"
+                                class="bg-yellow-500 text-white px-2 py-1 rounded text-xs w-full">
+                                Évaluer
+                            </button>
+                        </form>
+                    @else
+                        <span class="text-gray-400 text-xs">Non disponible</span>
+                    @endif
                 </td>
                 <td class="p-3">
                     @if($inscription->certificat)
@@ -55,7 +87,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="p-3 text-center text-gray-500">
+                <td colspan="7" class="p-3 text-center text-gray-500">
                     Vous n'avez aucune inscription.
                 </td>
             </tr>

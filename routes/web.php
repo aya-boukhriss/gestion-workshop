@@ -6,6 +6,7 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EvaluationController;
 use Illuminate\Support\Facades\Route;
 
 // Page d'accueil
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
 
     // Espace participant
     Route::get('/mon-espace', [InscriptionController::class, 'monEspace'])->name('mon.espace');
+
+    // Evaluations
+    Route::post('/evaluation/{inscription}', [EvaluationController::class, 'store'])->name('evaluation.store');
 });
 
 // Routes Formateur

@@ -52,7 +52,7 @@ class InscriptionController extends Controller
     // Espace participant
     public function monEspace()
     {
-        $inscriptions = Inscription::with('workshop', 'certificat')
+        $inscriptions = Inscription::with('workshop', 'certificat', 'evaluation')
                         ->where('id_participant', Auth::id())
                         ->latest()
                         ->get();
