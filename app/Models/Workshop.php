@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Workshop extends Model
 {
     protected $fillable = [
-    'titre',
-    'description',
-    'date_debut',
-    'date_fin',
-    'lieu',
-    'capacite',
-    'statut',
-    'id_formateur',
-    'photo'
-];
+        'titre',
+        'description',
+        'date_debut',
+        'date_fin',
+        'lieu',
+        'capacite',
+        'statut',
+        'id_formateur',
+        'photo',
+        'categorie_id'
+    ];
 
     // Un workshop appartient à un formateur
     public function formateur()
@@ -28,5 +29,11 @@ class Workshop extends Model
     public function inscriptions()
     {
         return $this->hasMany(Inscription::class, 'id_workshop');
+    }
+
+    // Un workshop appartient à une catégorie
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class, 'categorie_id');
     }
 }

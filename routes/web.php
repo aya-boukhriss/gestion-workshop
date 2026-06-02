@@ -7,6 +7,7 @@ use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\CategorieController;
 use Illuminate\Support\Facades\Route;
 
 // Page d'accueil
@@ -55,4 +56,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::patch('/users/{user}/role', [AdminController::class, 'updateRole'])->name('users.role');
+    Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
+    Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy'])->name('categories.destroy');
 });

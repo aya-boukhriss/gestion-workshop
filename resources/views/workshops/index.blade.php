@@ -16,10 +16,10 @@
 
 <!-- Barre de recherche et filtres -->
 <div class="bg-white rounded-lg shadow p-4 mb-6">
-    <form method="GET" action="{{ route('home') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <form method="GET" action="{{ route('home') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div>
             <input type="text" name="search" value="{{ request('search') }}"
-                placeholder="🔍 Rechercher un workshop..."
+                placeholder="🔍 Rechercher..."
                 class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800">
         </div>
         <div>
@@ -30,6 +30,18 @@
         <div>
             <input type="date" name="date" value="{{ request('date') }}"
                 class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800">
+        </div>
+        <div>
+            <select name="categorie"
+                class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800">
+                <option value="">🏷️ Toutes les catégories</option>
+                @foreach($categories as $categorie)
+                    <option value="{{ $categorie->id }}"
+                        {{ request('categorie') == $categorie->id ? 'selected' : '' }}>
+                        {{ $categorie->nom }}
+                    </option>
+                @endforeach
+            </select>
         </div>
         <div class="flex gap-2">
             <button type="submit"
@@ -47,7 +59,6 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     @forelse($workshops as $workshop)
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            {{-- Photo --}}
             @if($workshop->photo)
                 <img src="{{ asset('storage/' . $workshop->photo) }}"
                      alt="{{ $workshop->titre }}"
@@ -59,6 +70,12 @@
             @endif
 
             <div class="p-5">
+                @if($workshop->categorie)
+                    <span class="inline-block px-2 py-1 text-xs rounded-full text-white mb-2"
+                          style="background-color: {{ $workshop->categorie->couleur }}">
+                        {{ $workshop->categorie->nom }}
+                    </span>
+                @endif
                 <h2 class="text-lg font-bold text-blue-800 mb-2">{{ $workshop->titre }}</h2>
                 <p class="text-gray-600 text-sm mb-3">{{ Str::limit($workshop->description, 100) }}</p>
                 <div class="text-sm text-gray-500 mb-3">

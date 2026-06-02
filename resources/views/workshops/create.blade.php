@@ -55,6 +55,20 @@
             @error('capacite') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Catégorie</label>
+            <select name="categorie_id"
+                class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-800">
+                <option value="">-- Choisir une catégorie --</option>
+                @foreach($categories as $categorie)
+                    <option value="{{ $categorie->id }}"
+                        {{ old('categorie_id') == $categorie->id ? 'selected' : '' }}>
+                        {{ $categorie->nom }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="mb-6">
             <label class="block text-gray-700 font-bold mb-2">Photo du Workshop</label>
             <input type="file" name="photo" accept="image/*"

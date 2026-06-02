@@ -57,10 +57,16 @@
     </table>
 </div>
 
-<!-- Lien gestion users -->
-<a href="{{ route('admin.users') }}"
-   class="bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700">
-    👥 Gérer les Utilisateurs
-</a>
+<!-- Boutons actions -->
+<div class="flex gap-4">
+    <a href="{{ route('admin.users') }}"
+       class="bg-blue-800 text-white px-6 py-3 rounded hover:bg-blue-700">
+        👥 Gérer les Utilisateurs
+    </a>
+    <a href="{{ route('admin.categories') }}"
+       class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700">
+        🏷️ Gérer les Catégories
+    </a>
+</div>
 
 @endsection

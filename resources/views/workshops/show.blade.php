@@ -7,6 +7,11 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
+            @if($workshop->photo)
+                <img src="{{ asset('storage/' . $workshop->photo) }}"
+                     alt="{{ $workshop->titre }}"
+                     class="w-full h-48 object-cover rounded-lg mb-4">
+            @endif
             <p class="text-gray-700 mb-4">{{ $workshop->description }}</p>
             <div class="text-sm text-gray-600 space-y-2">
                 <p>📅 <strong>Début :</strong> {{ $workshop->date_debut }}</p>
@@ -46,6 +51,42 @@
             @endauth
         </div>
     </div>
+
+    <!-- Évaluations -->
+    @php
+    $evaluations = $workshop->inscriptions->filter(fn($i) => $i->evaluation)->map(fn($i) => $i->evaluation);
+    $moyenne = $evaluations->avg('note');
+    @endphp
+
+    @if($evaluations->count() > 0)
+    <div class="mt-6 bg-gray-50 rounded-lg p-4">
+        <h3 class="text-lg font-bold text-blue-800 mb-3">⭐ Évaluations des participants</h3>
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl font-bold text-yellow-500">{{ number_format($moyenne, 1) }}</span>
+            <div>
+                <div class="flex gap-1">
+                    @for($i = 1; $i <= 5; $i++)
+                        <span class="text-yellow-400 text-xl">{{ $i <= round($moyenne) ? '⭐' : '☆' }}</span>
+                    @endfor
+                </div>
+                <span class="text-sm text-gray-500">{{ $evaluations->count() }} avis</span>
+            </div>
+        </div>
+        @foreach($evaluations as $eval)
+        <div class="border-b pb-3 mb-3">
+            <div class="flex gap-1 mb-1">
+                @for($i = 1; $i <= 5; $i++)
+                    <span class="text-yellow-400">{{ $i <= $eval->note ? '⭐' : '☆' }}</span>
+                @endfor
+            </div>
+            @if($eval->commentaire)
+                <p class="text-gray-600 text-sm">{{ $eval->commentaire }}</p>
+            @endif
+            <p class="text-gray-400 text-xs mt-1">{{ $eval->date }}</p>
+        </div>
+        @endforeach
+    </div>
+    @endif
 
     <a href="{{ route('home') }}" class="text-blue-600 hover:underline">← Retour au catalogue</a>
 </div>
