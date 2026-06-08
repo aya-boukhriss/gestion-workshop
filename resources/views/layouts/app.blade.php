@@ -17,6 +17,9 @@
                 @if(auth()->user()->isAdmin())
                     <a href="/admin/dashboard" class="hover:underline">Admin</a>
                 @endif
+                @if(auth()->user()->isManager())
+                    <a href="/manager/dashboard" class="hover:underline">Manager</a>
+                @endif
                 @if(auth()->user()->isFormateur())
                     <a href="/formateur/dashboard" class="hover:underline">Formateur</a>
                 @endif

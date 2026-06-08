@@ -8,6 +8,7 @@ use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 
 // Page d'accueil
@@ -59,4 +60,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
     Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy'])->name('categories.destroy');
+});
+
+// Routes Manager
+Route::middleware(['auth', 'role:manager,admin'])->prefix('manager')->name('manager.')->group(function () {
+    Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
+    Route::get('/evaluations', [ManagerController::class, 'evaluations'])->name('evaluations');
 });

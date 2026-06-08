@@ -43,11 +43,23 @@
                         {{ ucfirst($workshop->statut) }}
                     </span>
                 </td>
-                <td class="p-2">
+                <td class="p-2 flex gap-2">
                     <a href="{{ route('formateur.participants', $workshop) }}"
                        class="text-blue-600 hover:underline">
-                        Voir participants
+                        Participants
                     </a>
+                    <a href="{{ route('workshops.edit', $workshop) }}"
+                       class="text-green-600 hover:underline">
+                        Modifier
+                    </a>
+                    <form method="POST" action="{{ route('workshops.destroy', $workshop) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:underline"
+                            onclick="return confirm('Supprimer ce workshop ?')">
+                            Supprimer
+                        </button>
+                    </form>
                 </td>
             </tr>
             @empty
